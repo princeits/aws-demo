@@ -1,0 +1,80 @@
+
+
+domain/api/v1/users/resister => api
+domain/api/v1/schools/create => api
+domain/api/v1/schools/verify => api
+
+domain/api/v1/users/login => api
+
+domain/api/v1/users/resister => api
+ROLE : TEACHER join,
+ROLE : STUDENT
+
+
+
+domain/api/v1/schools/admin/seats/ : POST
+domain/api/v1/schools/admin/seats/ : PATCH
+domain/api/v1/schools/admin/seats/:id ?id= : DELETE , Soft, Hard
+domain/api/v1/schools/admin/seats/ : GET
+
+domain/api/v1/schools/admin/students/:schoolId : GET
+page=2,
+limit=20
+
+
+domain/api/v1/schools/admin/students/:schoolId?page=1&limit=20&minAge=5&maxAge=10
+
+router.get('admin/students/:schoolId',async(req,res)=>{
+    let {schoolId} = req.params;   
+    let {page,limit,minAge,maxAge} = req.query;
+
+    let findQuery={}
+    let offset;
+
+    if(!page && !limit){
+        page=1,
+        limit=20
+    }
+    if(minAge & maxAge){
+        findQuery.age = {[Op.between]:[minAge,maxAge]}
+    }
+
+    let response = await students.findAll({
+        where:findQuery,
+        limit:limit
+        offset:ofset
+        attribute:['id','firstname','lastname']
+    })
+    res.status(200).json({
+        success:true,
+        message:'success',
+        data:response
+    })
+})
+
+
+students.find({
+    age:{}
+})
+
+
+
+modelName.findAll({
+    where:{
+        age:{[Op.between]:[]}
+    }
+})
+
+{
+    page:1,
+    previeusPage:0,
+    nextPage:2
+    total:20
+}
+
+
+
+
+
+USER =>
+
